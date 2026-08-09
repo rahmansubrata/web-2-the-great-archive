@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Waypoint II: The Great Archive | Life Journey Map</title>
+  
+  <!-- Fonts Klasik dari Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700&family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+  
+  <style>
+    /* RESET & VARIABLE */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    :root {
+      --bg-dark: #0b0907;
+      --parchment: #f4ece1;
+      --parchment-border: #c8b695;
+      --gold-accent: #c5a059;
+      --text-dark: #221811;
+      --vintage-burgundy: #5c1818;
+      --font-header: 'Cinzel', serif;
+      --font-body: 'Cormorant Garamond', serif;
+    }
+
+    body {
+      background-color: var(--bg-dark);
+      background-image: radial-gradient(circle at center, #1a140e 0%, #050403 100%);
+      color: var(--text-dark);
+      font-family: var(--font-body);
+      min-height: 100vh;
+      padding: 20px 10px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .map-container {
+      width: 100%;
+      max-width: 650px;
+    }
+
+    /* HEADER PETA KLASIK */
+    .map-header {
+      text-align: center;
+      color: var(--gold-accent);
+      margin-bottom: 20px;
+    }
+
+    .waypoint-tag {
+      font-family: var(--font-header);
+      font-size: 0.88rem;
+      letter-spacing: 2px;
+      color: #a88d58;
+    }
+
+    .location-title {
+      font-family: var(--font-header);
+      font-size: 1.8rem;
+      margin: 5px 0;
+      color: #f0e6d2;
+    }
+
+    .coordinates {
+      font-size: 0.95rem;
+      font-style: italic;
+      color: #a0907a;
+    }
+
+    .compass-rose {
+      font-size: 1.8rem;
+      margin-top: 10px;
+    }
+
+    /* PARCHMENT CARD */
+    .parchment-card {
+      background-color: var(--parchment);
+      border: 2px solid var(--parchment-border);
+      border-radius: 6px;
+      padding: 30px 22px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.85), inset 0 0 60px rgba(180, 140, 90, 0.25);
+      position: relative;
+    }
+
+    .section-title {
+      font-family: var(--font-header);
+      font-size: 1.35rem;
+      color: var(--text-dark);
+      text-align: center;
+      margin-bottom: 6px;
+    }
+
+    .section-desc {
+      text-align: center;
+      font-size: 1.1rem;
+      color: #5c4838;
+      margin-bottom: 25px;
+    }
+
+    /* CARDS ARCHIVE GRID */
+    .archive-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 15px;
+      margin-bottom: 25px;
+    }
+
+    .archive-card {
+      background: #eae0d0;
+      border: 1px solid #b8a686;
+      border-left: 4px solid var(--vintage-burgundy);
+      padding: 16px 18px;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .archive-card:hover {
+      background: #dfd0b9;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    }
+
+    .archive-card.active {
+      background: #d4c2a3;
+      border-color: var(--vintage-burgundy);
+    }
+
+    .card-label {
+      font-family: var(--font-header);
+      font-size: 1rem;
+      font-weight: bold;
+      color: var(--vintage-burgundy);
+      margin-bottom: 4px;
+    }
+
+    .card-sub {
+      font-size: 1rem;
+      color: #523f30;
+      font-style: italic;
+    }
+
+    /* DISPLAY BOX UNTUK ARCHIVE HASIL */
+    .quote-display {
+      background: #ede3d1;
+      border: 1px dashed var(--parchment-border);
+      padding: 20px;
+      border-radius: 4px;
+      margin-top: 15px;
+      min-height: 120px;
+      animation: fadeIn 0.5s ease-in-out;
+    }
+
+    .quote-text {
+      font-size: 1.15rem;
+      font-style: italic;
+      line-height: 1.6;
+      color: #2b1d12;
+      margin-bottom: 10px;
+    }
+
+    .quote-author {
+      font-family: var(--font-header);
+      font-size: 0.9rem;
+      color: var(--vintage-burgundy);
+      text-align: right;
+    }
+
+    .personal-note {
+      margin-top: 12px;
+      padding-top: 10px;
+      border-top: 1px dashed #c0ae8c;
+      font-size: 1.05rem;
+      line-height: 1.6;
+      color: #423022;
+    }
+
+    /* STEMPEL PERPUSTAKAAN */
+    .library-stamp {
+      border: 2px double var(--vintage-burgundy);
+      color: var(--vintage-burgundy);
+      padding: 10px;
+      text-align: center;
+      font-family: var(--font-header);
+      font-size: 0.85rem;
+      letter-spacing: 1.5px;
+      margin: 25px auto 15px;
+      width: 80%;
+      text-transform: uppercase;
+      transform: rotate(-1deg);
+    }
+
+    .divider {
+      text-align: center;
+      color: var(--gold-accent);
+      margin: 20px 0;
+    }
+
+    .book-reveal {
+      margin-top: 20px;
+    }
+
+    .book-subtitle {
+      font-family: var(--font-header);
+      font-size: 1.2rem;
+      color: var(--vintage-burgundy);
+      margin-bottom: 10px;
+      text-align: center;
+    }
+
+    .book-text {
+      font-size: 1.15rem;
+      line-height: 1.7;
+      text-align: justify;
+      margin-bottom: 12px;
+    }
+
+    .note-box {
+      margin-top: 15px;
+      text-align: center;
+      color: #523b2b;
+      font-size: 1.1rem;
+    }
+
+    .hidden {
+      display: none !important;
+    }
+
+    .primary-btn {
+      width: 100%;
+      background: var(--vintage-burgundy);
+      color: #fff;
+      border: none;
+      padding: 14px;
+      font-family: var(--font-header);
+      font-size: 0.95rem;
+      border-radius: 4px;
+      cursor: pointer;
+      margin-top: 15px;
+      transition: opacity 0.3s ease;
+    }
+
+    .primary-btn.disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(5deg); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="map-container">
+    
+    <!-- HEADER PETA KLASIK -->
+    <header class="map-header">
+      <div class="waypoint-tag">WAYPOINT II OF IV</div>
+      <h1 class="location-title">📖 The Great Archive of Thought</h1>
+      <p class="coordinates">Peta Koordinat: [Ruang Intelijensi & Gagasan]</p>
+      <div class="compass-rose">🧭</div>
+    </header>
+
+    <!-- KONTEN INTERAKTIF: PERPUSTAKAAN ARSIP -->
+    <main class="parchment-card">
+      
+      <section id="archiveStep">
+        <h2 class="section-title">Buka Arsip Pemikiran</h2>
+        <p class="section-desc">Pilih salah satu volume di bawah untuk membuka lembaran refleksi:</p>
+
+        <div class="archive-grid">
+          <div class="archive-card" onclick="selectArchive(1)">
+            <div class="card-label">Volume I: On Liberty & Sovereignty</div>
+            <div class="card-sub">Tentang kebebasan berkehendak dan kedaulatan jiwa.</div>
+          </div>
+
+          <div class="archive-card" onclick="selectArchive(2)">
+            <div class="card-label">Volume II: On Economics & Order</div>
+            <div class="card-sub">Tentang dinamika tatanan dan pemikiran kritis rasional.</div>
+          </div>
+
+          <div class="archive-card" onclick="selectArchive(3)">
+            <div class="card-label">Volume III: On Peace & Safe Harbor</div>
+            <div class="card-sub">Tentang kedamaian di tengah riuhnya ekspetasi dunia.</div>
+          </div>
+        </div>
+
+        <!-- AREA DISPLAY KUTIPAN & CATATAN -->
+        <div id="quoteDisplay" class="quote-display hidden">
+          <div id="quoteText" class="quote-text"></div>
+          <div id="quoteAuthor" class="quote-author"></div>
+          <div id="personalNote" class="personal-note"></div>
+        </div>
+
+        <button id="proceedBtn" class="primary-btn disabled" disabled onclick="revealBookMeaning()">
+          Buka Filosofi Buku #2 ➔
+        </button>
+      </section>
+
+      <!-- BAGIAN PENJELASAN BUKU #2 -->
+      <section id="bookSection" class="book-reveal hidden">
+        <div class="divider">✦ ✦ ✦</div>
+        
+        <div class="library-stamp">
+          OFFICIALLY ARCHIVED • FOR HER FREEDOM & INTELLECT
+        </div>
+
+        <h3 class="book-subtitle">Mengapa Buku Ini Dipilih Khusus Untukmu?</h3>
+        
+        <p class="book-text">
+          Di antara sekian banyak orang, kamu adalah salah satu pribadi yang paling mengagumkan. Ketertarikanmu pada bahasa Inggris, isu politik, tatanan negara, dan dinamika ekonomi menunjukkan betapa tajamnya pikiranmu dalam melihat dunia secara kritis dan obyektif.
+        </p>
+
+        <p class="book-text">
+          Namun di luar segala pemikiran besarmu tentang dunia, aku tahu ada jiwa yang merindukan ruang mandiri yang tenang—bebas dari aturan yang mengekang, dan bebas untuk menjadi dirimu sendiri tanpa perlu menahan apa pun.
+        </p>
+
+        <p class="book-text">
+          Buku kedua dalam buket ini diberikan sebagai bentuk apresiasi atas kecerdasanmu, sekaligus sebagai simbol dukungan untuk setiap langkah kebebasan dan kedamaian yang berhak kamu miliki.
+        </p>
+
+        <div class="note-box">
+          <p><em>"A brilliant mind deserves absolute freedom, and a gentle heart deserves unconditioned peace."</em></p>
+        </div>
+      </section>
+
+    </main>
+
+  </div>
+
+  <script>
+    const archives = {
+      1: {
+        quote: '"Freedom is not the right to do what we want, but the power to do what we ought without the shadow of constraint."',
+        author: '— Philosophical Reflection on Sovereignty',
+        note: '💡 **Catatan untukmu:** Kamu berhak memiliki kedaulatan atas hidup dan keputusanmu sendiri. Jangan pernah biarkan siapa pun membatasi seberapa jauh kamu ingin melangkah.'
+      },
+      2: {
+        quote: '"Order and progress are not built on noise, but on critical thought, quiet resilience, and structured vision."',
+        author: '— Perspective on Economic & Social Order',
+        note: '🧠 **Catatan untukmu:** Ketertarikanmu pada politik dan ekonomi memperlihatkan betapa dalamnya caramu berpikir. Kamu tidak sekadar melihat permukaan, tapi memahami esensi.'
+      },
+      3: {
+        quote: '"Peace is not the absence of trouble, but the presence of a safe space where you can finally rest your shoulders."',
+        author: '— The Sanctuary Note',
+        note: '🌿 **Catatan untukmu:** Kamu boleh menjadi wanita tangguh yang kritis, tapi kamu juga selalu berhak untuk bermanja, merasa aman, dan beristirahat tanpa beban.'
+      }
+    };
+
+    let selected = false;
+
+    function selectArchive(id) {
+      // Highlight kartu yang dipilih
+      const cards = document.querySelectorAll('.archive-card');
+      cards.forEach((card, index) => {
+        if (index === id - 1) {
+          card.classList.add('active');
+        } else {
+          card.classList.remove('active');
+        }
+      });
+
+      // Tampilkan Kutipan & Catatan
+      const display = document.getElementById('quoteDisplay');
+      const textEl = document.getElementById('quoteText');
+      const authorEl = document.getElementById('quoteAuthor');
+      const noteEl = document.getElementById('personalNote');
+
+      display.classList.remove('hidden');
+      textEl.innerText = archives[id].quote;
+      authorEl.innerText = archives[id].author;
+      noteEl.innerHTML = archives[id].note;
+
+      // Enable Tombol Lanjut
+      const proceedBtn = document.getElementById('proceedBtn');
+      proceedBtn.classList.remove('disabled');
+      proceedBtn.removeAttribute('disabled');
+      selected = true;
+    }
+
+    function revealBookMeaning() {
+      if (!selected) return;
+      
+      const bookSection = document.getElementById('bookSection');
+      bookSection.classList.remove('hidden');
+
+      // Smooth scroll ke bawah untuk membaca penjelasan buku
+      bookSection.scrollIntoView({ behavior: 'smooth' });
+    }
+  </script>
+</body>
+</html>
